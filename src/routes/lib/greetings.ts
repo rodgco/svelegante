@@ -1,4 +1,4 @@
-import Store from './store';
+import Store from '$lib/store';
 
 class MyStore extends Store<string> {
 	greet(value: string) {

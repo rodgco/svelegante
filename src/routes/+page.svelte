@@ -1,21 +1,25 @@
 <script lang="ts">
-	import store from '$lib/hello_world';
-	import counter from '$lib/counter';
-	import Header from './header.svelte';
-	import Counter from './counter.svelte'
+	import helloWorld from './lib/hello_world';
+	import counter from './lib/counter';
 
-	let value = $store;
+	import Header from './header.svelte';
+	import Counter from './counter.svelte';
+
+	let value = $helloWorld;
 
 	let asyncCounter = counter.current();
 </script>
 
 <Header />
-<h2 aria-live="polite" role="log">{$store}, Rodrigo.</h2>
-<form on:submit|preventDefault={() => store.set(value)}>
+<h2 aria-live="polite" role="log">{$helloWorld}</h2>
+<form on:submit|preventDefault={() => helloWorld.set(value)}>
 	<input type="text" bind:value />
 </form>
 
+<h2>Counter</h2>
 <Counter />
 
-<p><button on:click={() => asyncCounter = counter.current()}>Update</button>
- { asyncCounter }</p>
+<p>
+	<button on:click={() => (asyncCounter = counter.current())}>Async Update</button>
+	{asyncCounter}
+</p>
