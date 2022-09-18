@@ -1,6 +1,8 @@
 {
 	"name": "svelegante",
 	"description": "A classy Svelte writable store",
+	"repository": "http://github.com/rodgco/svelegante",
+	"homepage": "http://github.com/rodgco/svelegante",
 	"version": "0.1.1",
 	"scripts": {
 		"dev": "vite dev",
