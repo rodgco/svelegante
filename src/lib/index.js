@@ -1,3 +1,4 @@
 // Reexport your entry components here
+import Store from './store';
 
-export * as default from './store';
+export default Store;

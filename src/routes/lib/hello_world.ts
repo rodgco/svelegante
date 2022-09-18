@@ -1,3 +1,3 @@
-import Store from '$lib/store';
+import Store from '$lib';
 
 export default new Store('Hello World');
