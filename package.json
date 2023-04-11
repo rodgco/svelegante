@@ -1,6 +1,6 @@
 {
 	"name": "svelegante",
-	"version": "0.2.3",
+	"version": "0.2.4",
 	"scripts": {
 		"dev": "vite dev",
 		"build": "vite build && npm run package",
@@ -24,7 +24,7 @@
 		"!dist/**/*.test.*",
 		"!dist/**/*.spec.*"
 	],
-  "readme": "README.md",
+	"readme": "README.md",
 	"peerDependencies": {
 		"svelte": "^3.54.0"
 	},
