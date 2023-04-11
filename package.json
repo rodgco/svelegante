@@ -24,6 +24,7 @@
 		"!dist/**/*.test.*",
 		"!dist/**/*.spec.*"
 	],
+  "readme": "README.md",
 	"peerDependencies": {
 		"svelte": "^3.54.0"
 	},
