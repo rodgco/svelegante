@@ -37,7 +37,8 @@ All this three methods are available to instances of the store, including this.c
 
 import Store from 'svelegante';
 
-class Counter extends Store<number> {
+/** @extends {Store<number>} 
+class Counter extends Store {
 	increment() {
 		this.update((n) => n + 1);
 	}
