@@ -1,5 +1,5 @@
 import Store from './index';
-import * as assert from 'assert';
+import { describe, it, expect } from 'vitest';
 import { noop } from 'svelte/internal';
 import { derived, get } from 'svelte/store';
 
@@ -14,7 +14,7 @@ describe('store', () => {
 
 		unsubscribe();
 
-		assert.deepEqual(values, [0]);
+    expect(values).toEqual([0]);
 	});
 
 	it('creates writable a store', () => {
@@ -33,7 +33,7 @@ describe('store', () => {
 		count.set(3);
 		count.update((n) => n + 1);
 
-		assert.deepEqual(values, [0, 1, 2]);
+    expect(values).toEqual([0, 1, 2]);
 	});
 
 	it('is extensible', () => {
@@ -54,7 +54,7 @@ describe('store', () => {
 
 		unsubscribe();
 
-		assert.deepEqual(values, [0, 1]);
+    expect(values).toEqual([0, 1]);
 	});
 
 	it('creates an undefined writable store', () => {
@@ -67,7 +67,7 @@ describe('store', () => {
 
 		unsubscribe();
 
-		assert.deepEqual(values, [undefined]);
+		expect(values).toEqual([undefined]);
 	});
 
 	it('calls provided subscribe handler', () => {
@@ -79,16 +79,16 @@ describe('store', () => {
 		});
 
 		const unsubscribe1 = store.subscribe(noop);
-		assert.equal(called, 1);
+    expect(called).toBe(1);
 
 		const unsubscribe2 = store.subscribe(noop);
-		assert.equal(called, 1);
+    expect(called).toBe(1);
 
 		unsubscribe1();
-		assert.equal(called, 1);
+    expect(called).toBe(1);
 
 		unsubscribe2();
-		assert.equal(called, 0);
+    expect(called).toBe(0);
 	});
 
 	it('does not assume immutable data', () => {
@@ -102,10 +102,10 @@ describe('store', () => {
 		});
 
 		store.set(obj);
-		assert.equal(called, 2);
+    expect(called).toBe(2);
 
 		store.update((obj) => obj);
-		assert.equal(called, 3);
+    expect(called).toBe(3);
 	});
 
 	it('only calls subscriber once initially, including on resubscriptions', () => {
@@ -116,10 +116,10 @@ describe('store', () => {
 		let count2 = 0;
 
 		store.subscribe(() => (count1 += 1))();
-		assert.equal(count1, 1);
+    expect(count1).toBe(1);
 
 		const unsubscribe = store.subscribe(() => (count2 += 1));
-		assert.equal(count2, 1);
+    expect(count2).toBe(1);
 
 		unsubscribe();
 	});
@@ -136,12 +136,12 @@ describe('store', () => {
 			});
 
 			a.set(2);
-			assert.deepEqual(values, [2, 4]);
+      expect(values).toEqual([2, 4]);
 
 			unsubscribe();
 
 			a.set(3);
-			assert.deepEqual(values, [2, 4]);
+			expect(values).toEqual([2, 4]);
 		});
 
 		it('maps multiple stores', () => {
@@ -157,19 +157,19 @@ describe('store', () => {
 
 			a.set(4);
 			b.set(5);
-			assert.deepEqual(values, [6, 12, 20]);
+			expect(values).toEqual([6, 12, 20]);
 
 			unsubscribe();
 
 			a.set(6);
-			assert.deepEqual(values, [6, 12, 20]);
+			expect(values).toEqual([6, 12, 20]);
 		});
 	});
 
 	describe('it works with get', () => {
 		it('gets the current value of a store', () => {
 			const store = new Store(42, noop);
-			assert.equal(get(store), 42);
+			expect(get(store)).toEqual(42);
 		});
 	});
 });
