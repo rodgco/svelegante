@@ -1,6 +1,7 @@
-import Store from '$lib';
+import Store from 'svelegante';
 
-class Counter extends Store<number> {
+/** @extends {Store<number>} */
+class Counter extends Store {
 	increment() {
 		this.update((n) => n + 1);
 	}

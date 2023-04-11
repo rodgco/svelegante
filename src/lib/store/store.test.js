@@ -6,7 +6,8 @@ import { derived, get } from 'svelte/store';
 describe('store', () => {
 	it('creates a store', () => {
 		const count = new Store(0);
-		const values: number[] = [];
+    /** @type {number[]} */
+		const values = [];
 
 		const unsubscribe = count.subscribe((value) => {
 			values.push(value);
@@ -19,7 +20,8 @@ describe('store', () => {
 
 	it('creates writable a store', () => {
 		const count = new Store(0);
-		const values: number[] = [];
+    /** @type {number[]} */
+		const values = [];
 
 		const unsubscribe = count.subscribe((value) => {
 			values.push(value);
@@ -37,14 +39,16 @@ describe('store', () => {
 	});
 
 	it('is extensible', () => {
-		class MyStore extends Store<number> {
+    /** @extends {Store<number>} */
+		class MyStore extends Store {
 			increment() {
-				this.update((curr: number) => ++curr);
+				this.update((curr) => ++curr);
 			}
 		}
 
 		const count = new MyStore(0);
-		const values: number[] = [];
+    /** @type {number[]} */
+		const values = [];
 
 		const unsubscribe = count.subscribe((value) => {
 			values.push(value);
@@ -59,7 +63,9 @@ describe('store', () => {
 
 	it('creates an undefined writable store', () => {
 		const store = new Store();
-		const values: unknown[] = [];
+
+    /** @type{unknown[]} */
+		const values = [];
 
 		const unsubscribe = store.subscribe((value) => {
 			values.push(value);
@@ -129,7 +135,8 @@ describe('store', () => {
 			const a = new Store(1);
 			const b = derived(a, (n) => n * 2);
 
-			const values: number[] = [];
+      /** @type {number[]} */
+			const values = [];
 
 			const unsubscribe = b.subscribe((value) => {
 				values.push(value);
@@ -149,7 +156,8 @@ describe('store', () => {
 			const b = new Store(3);
 			const c = derived([a, b], ([a, b]) => a * b);
 
-			const values: number[] = [];
+      /** @type {number[]} */
+			const values = [];
 
 			const unsubscribe = c.subscribe((value) => {
 				values.push(value);
