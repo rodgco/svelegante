@@ -1,4 +1,4 @@
-import Store from 'svelegante';
+import Store from '$lib';
 
 /** @extends {Store<number>} */
 class Counter extends Store {
@@ -11,4 +11,4 @@ class Counter extends Store {
 	}
 }
 
-export default new Counter(0);
+export default new Counter(0, { storage: 'localStorage', key: 'counter', load: false });

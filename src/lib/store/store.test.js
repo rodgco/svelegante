@@ -6,7 +6,7 @@ import { derived, get } from 'svelte/store';
 describe('store', () => {
 	it('creates a store', () => {
 		const count = new Store(0);
-    /** @type {number[]} */
+		/** @type {number[]} */
 		const values = [];
 
 		const unsubscribe = count.subscribe((value) => {
@@ -15,12 +15,12 @@ describe('store', () => {
 
 		unsubscribe();
 
-    expect(values).toEqual([0]);
+		expect(values).toEqual([0]);
 	});
 
 	it('creates writable a store', () => {
 		const count = new Store(0);
-    /** @type {number[]} */
+		/** @type {number[]} */
 		const values = [];
 
 		const unsubscribe = count.subscribe((value) => {
@@ -35,11 +35,11 @@ describe('store', () => {
 		count.set(3);
 		count.update((n) => n + 1);
 
-    expect(values).toEqual([0, 1, 2]);
+		expect(values).toEqual([0, 1, 2]);
 	});
 
 	it('is extensible', () => {
-    /** @extends {Store<number>} */
+		/** @extends {Store<number>} */
 		class MyStore extends Store {
 			increment() {
 				this.update((curr) => ++curr);
@@ -47,7 +47,7 @@ describe('store', () => {
 		}
 
 		const count = new MyStore(0);
-    /** @type {number[]} */
+		/** @type {number[]} */
 		const values = [];
 
 		const unsubscribe = count.subscribe((value) => {
@@ -58,13 +58,13 @@ describe('store', () => {
 
 		unsubscribe();
 
-    expect(values).toEqual([0, 1]);
+		expect(values).toEqual([0, 1]);
 	});
 
 	it('creates an undefined writable store', () => {
 		const store = new Store();
 
-    /** @type{unknown[]} */
+		/** @type{unknown[]} */
 		const values = [];
 
 		const unsubscribe = store.subscribe((value) => {
@@ -85,16 +85,16 @@ describe('store', () => {
 		});
 
 		const unsubscribe1 = store.subscribe(noop);
-    expect(called).toBe(1);
+		expect(called).toBe(1);
 
 		const unsubscribe2 = store.subscribe(noop);
-    expect(called).toBe(1);
+		expect(called).toBe(1);
 
 		unsubscribe1();
-    expect(called).toBe(1);
+		expect(called).toBe(1);
 
 		unsubscribe2();
-    expect(called).toBe(0);
+		expect(called).toBe(0);
 	});
 
 	it('does not assume immutable data', () => {
@@ -108,10 +108,10 @@ describe('store', () => {
 		});
 
 		store.set(obj);
-    expect(called).toBe(2);
+		expect(called).toBe(2);
 
 		store.update((obj) => obj);
-    expect(called).toBe(3);
+		expect(called).toBe(3);
 	});
 
 	it('only calls subscriber once initially, including on resubscriptions', () => {
@@ -122,10 +122,10 @@ describe('store', () => {
 		let count2 = 0;
 
 		store.subscribe(() => (count1 += 1))();
-    expect(count1).toBe(1);
+		expect(count1).toBe(1);
 
 		const unsubscribe = store.subscribe(() => (count2 += 1));
-    expect(count2).toBe(1);
+		expect(count2).toBe(1);
 
 		unsubscribe();
 	});
@@ -135,7 +135,7 @@ describe('store', () => {
 			const a = new Store(1);
 			const b = derived(a, (n) => n * 2);
 
-      /** @type {number[]} */
+			/** @type {number[]} */
 			const values = [];
 
 			const unsubscribe = b.subscribe((value) => {
@@ -143,7 +143,7 @@ describe('store', () => {
 			});
 
 			a.set(2);
-      expect(values).toEqual([2, 4]);
+			expect(values).toEqual([2, 4]);
 
 			unsubscribe();
 
@@ -156,7 +156,7 @@ describe('store', () => {
 			const b = new Store(3);
 			const c = derived([a, b], ([a, b]) => a * b);
 
-      /** @type {number[]} */
+			/** @type {number[]} */
 			const values = [];
 
 			const unsubscribe = c.subscribe((value) => {

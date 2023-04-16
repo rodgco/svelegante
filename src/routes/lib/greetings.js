@@ -1,10 +1,10 @@
-import Store from 'svelegante';
+import Store from '$lib';
 
 /**
-* @extends {Store<string>}
-*/
+ * @extends {Store<string>}
+ */
 class MyStore extends Store {
-  /** @param {string} value */
+	/** @param {string} value */
 	greet(value) {
 		this.value.set(value);
 	}

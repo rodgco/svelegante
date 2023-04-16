@@ -1,4 +1,6 @@
 <script>
+	export const ssr = false;
+
 	import helloWorld from './lib/hello_world';
 	import counter from './lib/counter';
 
@@ -7,7 +9,7 @@
 
 	let value = $helloWorld;
 
-	let asyncCounter = counter.current();
+	let asyncCounter = $counter;
 </script>
 
 <Header />
@@ -20,6 +22,6 @@
 <Counter />
 
 <p>
-	<button on:click={() => (asyncCounter = counter.current())}>Async Update</button>
+	<button on:click={() => (asyncCounter = $counter)}>Async Update</button>
 	{asyncCounter}
 </p>
