@@ -22,6 +22,14 @@ npm install --save-dep svelegante
 import Store from 'svelegante';
 
 export default new Store('Hello World');
+
+// page.svelte
+
+<script>
+    import hello from './hello_world';
+</script>
+
+<h1>{ $hello }</h1>
 ```
 
 ## It can be extended
@@ -49,6 +57,16 @@ class Counter extends Store {
 }
 
 export default new Counter(0);
+
+// counter.svelte
+
+<script>
+    import counter from './counter'
+</script>
+
+<button on:click={() => counter.decrement()}>-</button>
+<span>{$counter}</span>
+<button on:click={() => counter.increment()}>+</button>
 ```
 
 ## It can be persisted
