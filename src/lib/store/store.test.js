@@ -79,7 +79,7 @@ describe('store', () => {
 	it('calls provided subscribe handler', () => {
 		let called = 0;
 
-		const store = new Store(0, () => {
+		const store = new Store(0, undefined, () => {
 			called += 1;
 			return () => (called -= 1);
 		});

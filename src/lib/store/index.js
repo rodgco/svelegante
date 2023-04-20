@@ -56,8 +56,9 @@ export default class Store {
 	 * @constructor
 	 * @param {T} [value]
 	 * @param {Options} [options]
+	 * @param {import('svelte/store').StartStopNotifier<any>} start
 	 */
-	constructor(value, options = { storage: 'null', key: '', load: false }) {
+	constructor(value, options = { storage: 'null', key: '', load: false }, start = noop) {
 		this.storage = browser
 			? options.storage === 'localStorage'
 				? localStorage
@@ -75,9 +76,6 @@ export default class Store {
 			}
 			this.storage.setItem(options.key || '', JSON.stringify({ value }));
 		}
-
-		/** @type {import('svelte/store').StartStopNotifier<any>} */
-		const start = noop;
 
 		this.store = writable(value, start);
 		this.subscribe = this.store.subscribe;
