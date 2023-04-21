@@ -1,6 +1,4 @@
 <script>
-	export const ssr = false;
-
 	import helloWorld from './lib/hello_world';
 	import counter from './lib/counter';
 

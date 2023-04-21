@@ -15,6 +15,9 @@ devDependencies:
   '@sveltejs/package':
     specifier: ^2.0.2
     version: 2.0.2(svelte@3.58.0)(typescript@5.0.4)
+  browser-or-node:
+    specifier: ^2.1.1
+    version: 2.1.1
   eslint:
     specifier: ^8.38.0
     version: 8.38.0
@@ -579,6 +582,10 @@ packages:
     engines: {node: '>=8'}
     dependencies:
       fill-range: 7.0.1
+    dev: true
+
+  /browser-or-node@2.1.1:
+    resolution: {integrity: sha512-8CVjaLJGuSKMVTxJ2DpBl5XnlNDiT4cQFeuCJJrvJmts9YrTZDizTX7PjC2s6W4x+MBGZeEY6dGMrF04/6Hgqg==}
     dev: true
 
   /buffer-crc32@0.2.13:

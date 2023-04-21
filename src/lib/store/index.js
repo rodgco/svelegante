@@ -1,6 +1,6 @@
 import { writable, get } from 'svelte/store';
 import { noop } from 'svelte/internal';
-import { browser } from '$app/environment';
+import { isBrowser } from 'browser-or-node';
 
 /**
  * @template X
@@ -59,7 +59,7 @@ export default class Store {
 	 * @param {import('svelte/store').StartStopNotifier<any>} start
 	 */
 	constructor(value, options = { storage: 'null', key: '', load: false }, start = noop) {
-		this.storage = browser
+		this.storage = isBrowser
 			? options.storage === 'localStorage'
 				? localStorage
 				: options.storage === 'sessionStorage'
