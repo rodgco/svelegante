@@ -1,6 +1,8 @@
 import { writable, get } from 'svelte/store';
 import { noop } from 'svelte/internal';
-import { isBrowser } from 'browser-or-node';
+
+/** @type {boolean} */
+const isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined"
 
 /**
  * @template X

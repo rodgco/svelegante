@@ -11,4 +11,4 @@ class Counter extends Store {
 	}
 }
 
-export default new Counter(0, { storage: 'localStorage', key: 'counter', load: false });
+export default new Counter(0, { storage: 'localStorage', key: 'counter', load: true });
