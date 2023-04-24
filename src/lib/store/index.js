@@ -22,7 +22,7 @@ export default class Store {
 	/**
 	 * @typedef {Object} Options
 	 * @property {"null" | "localStorage" | "sessionStorage"} storage
-	 * @property {string} [key]
+	 * @property {string} key
 	 * @property {boolean} [load] - Indicates whether value in storage has precedence over value value
 	 */
 
@@ -71,9 +71,9 @@ export default class Store {
 		this.key = options.key || '';
 
 		if (this.storage) {
-			if (this.storage.getItem(options.key || '')) {
-				if (options.load) {
-					value = JSON.parse(this.storage.getItem(options.key || '') || '{}').value;
+			if (this.storage.getItem(this.key)) {
+				if (options.load ?? true) { // default load = true
+					value = JSON.parse(this.storage.getItem(this.key) || '{}').value;
 				}
 			}
 			this.storage.setItem(options.key || '', JSON.stringify({ value }));
