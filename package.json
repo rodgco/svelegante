@@ -9,7 +9,7 @@
 		"prepublishOnly": "npm run package",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json",
 		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./jsconfig.json --watch",
-		"test:unit": "vitest",
+		"test": "vitest",
 		"lint": "prettier --plugin-search-dir . --check . && eslint .",
 		"format": "prettier --plugin-search-dir . --write ."
 	},
@@ -25,7 +25,7 @@
 		"!dist/**/*.spec.*"
 	],
 	"peerDependencies": {
-		"svelte": "^3.54.0"
+		"svelte": "^4.0.0"
 	},
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.1.0",
@@ -33,7 +33,7 @@
 		"@sveltejs/package": "^2.2.2",
 		"eslint": "^8.49.0",
 		"eslint-config-prettier": "^9.0.0",
-		"eslint-plugin-svelte3": "^4.0.0",
+		"eslint-plugin-svelte": "^2.30.0",
 		"prettier": "^3.0.3",
 		"prettier-plugin-svelte": "^3.0.3",
 		"publint": "^0.2.2",
