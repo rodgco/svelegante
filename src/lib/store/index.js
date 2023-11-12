@@ -23,7 +23,7 @@ export default class Store {
    * @type {import('svelte/store').Writable<T>} */
   store;
 
-  /** @type {null | localStorage | sessionStorage} */
+  /** @type {undefined | null | localStorage | sessionStorage} */
   storage;
 
   /** @type {Options["key"]} */
@@ -87,7 +87,9 @@ export default class Store {
 	 * @param {T} value
 	 */
 	set(value) {
-		this.storage?.setItem(this.key, JSON.stringify({ value }));
+    if (isBrowser && this.storage) {
+		  this.storage.setItem(this.key, JSON.stringify({ value }));
+    }
 		this.store.set(value);
 	}
 
