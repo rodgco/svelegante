@@ -1,12 +1,13 @@
 /** @type {boolean} */
-export const isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined';
+const isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined';
 
 /** @type {boolean} */
-export const isNode = typeof process !== 'undefined' && process.versions != null && process.versions.node != null;
+const isNode = typeof process !== 'undefined' && process.versions != null && process.versions.node != null;
 
 /** @type {localStorage | sessionStorage | null} */
-export const getLocalStorage = isBrowser ? window.localStorage : null;
+const getLocalStorage = isBrowser ? window.localStorage : null;
 
 /** @type {localStorage | sessionStorage | null} */
-export const getSessionStorage = isBrowser ? window.sessionStorage : null;
+const getSessionStorage = isBrowser ? window.sessionStorage : null;
 
+export { getLocalStorage, getSessionStorage, isBrowser, isNode };
