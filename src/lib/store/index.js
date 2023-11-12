@@ -1,10 +1,8 @@
 import { writable, get } from 'svelte/store';
+import { isBrowser } from '../util';
 
 /** @returns {void} */
 function noop() {}
-
-/** @type {boolean} */
-const isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined';
 
 /**
  * @typedef {Object} Options
@@ -45,47 +43,49 @@ export default class Store {
 	 * @param {Options} [options]
 	 * @param {import('svelte/store').StartStopNotifier<T>} [start]
 	 */
-	constructor(value, options = {}, start = noop) {
-		options = {
-			storage: undefined,
-			key: undefined,
-			load: true,
-			...options
-		};
-		const { storage, key, load } = options;
+  constructor(value, options = {}, start = noop) {
+    options = {
+      storage: undefined,
+      key: undefined,
+      load: true,
+      ...options
+    };
+    const { storage, key, load } = options;
 
-		if (typeof storage === 'string' && isBrowser) {
-			this.storage =
-				options.storage === 'localStorage'
-					? localStorage
-					: options.storage === 'sessionStorage'
-					? sessionStorage
-					: null;
-		} else if (isBrowser) {
-			this.storage = storage;
-		}
-		this.key = key;
+    if (isBrowser) {
+      if (typeof storage === 'string') {
+        this.storage =
+          options.storage === 'localStorage'
+            ? localStorage
+            : options.storage === 'sessionStorage'
+              ? sessionStorage
+              : null;
+      } else {
+        this.storage = storage;
+      }
+      this.key = key;
 
-		if (this.storage) {
-			if (!this.key) {
-				throw new Error('key is required when storage is set');
-			}
+      if (this.storage) {
+        if (!this.key) {
+          throw new Error('key is required when storage is set');
+        }
 
-			if (this.storage.getItem(this.key)) {
-				if (load) {
-					// value in storage has precedence over value value
-					const rawStoredValue = this.storage.getItem(this.key);
-					if (rawStoredValue) {
-						value = JSON.parse(rawStoredValue).value;
-					}
-				}
-			}
-			this.storage.setItem(options.key, JSON.stringify({ value }));
-		}
+        if (this.storage.getItem(this.key)) {
+          if (load) {
+            // value in storage has precedence over value value
+            const rawStoredValue = this.storage.getItem(this.key);
+            if (rawStoredValue) {
+              value = JSON.parse(rawStoredValue).value;
+            }
+          }
+        }
+        this.storage.setItem(options.key, JSON.stringify({ value }));
+      }
+    }
 
-		this.store = writable(value, start);
-		this.subscribe = this.store.subscribe;
-	}
+    this.store = writable(value, start);
+    this.subscribe = this.store.subscribe;
+  }
 
 	/**
 	 * @public
