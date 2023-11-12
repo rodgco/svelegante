@@ -91,13 +91,14 @@ export default class Store {
 	 * @param {T} value
 	 */
 	set(value) {
-		this.storage?.setItem(this.key || '', JSON.stringify({ value }));
+		this.storage?.setItem(this.key, JSON.stringify({ value }));
 		this.store.set(value);
 	}
 
-	/**typeof window !== 'undefined'
+	/**
 	 * @public
-	 * @param {import('svelte/store').Updater<T>} updater */
+	 * @param {import('svelte/store').Updater<T>} updater
+   */
 	update(updater) {
 		const value = updater(get(this.store));
 		this.set(value);
