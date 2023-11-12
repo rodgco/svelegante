@@ -57,7 +57,7 @@ export default class Store {
 			if (this.storage.getItem(this.key)) {
 				if (load) {
 					// value in storage has precedence over value value
-					rawStoredValue = this.storage.getItem(this.key);
+					const rawStoredValue = this.storage.getItem(this.key);
 					if (rawStoredValue) {
 						value = JSON.parse(rawStoredValue).value;
 					}
