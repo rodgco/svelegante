@@ -1,30 +1,79 @@
 import { writable, get } from 'svelte/store';
-import { noop } from 'svelte/internal';
+
+/** @returns {void} */
+function noop() {}
 
 /** @type {boolean} */
-const isBrowser = typeof window !== "undefined" && typeof window.document !== "undefined"
+const isBrowser = typeof window !== 'undefined' && typeof window.document !== 'undefined';
 
 /**
- * @template X
- * @typedef {import('svelte/store').Writable<X>} Writable<X>
+ * @typedef {Object} Options
+ * @property {"null" | "localStorage" | "sessionStorage" | Storage | undefined | null} storage
+ * @property {string | undefined | null} key
+ * @property {boolean} [load] - Indicates whether value in storage has precedence over value value
  */
 
 /**
  * @template T
- * @implements {Writable<T>}
+ * @implements {import('svelte/store').Writable<T>}
  */
 export default class Store {
-	/**
-	 * @protected
-	 * @type {Writable<T>} */
-	store;
+	storage = undefined;
+	key = undefined;
+	load = false;
 
 	/**
-	 * @typedef {Object} Options
-	 * @property {"null" | "localStorage" | "sessionStorage"} storage
-	 * @property {string} key
-	 * @property {boolean} [load] - Indicates whether value in storage has precedence over value value
+	 * @constructor
+	 * @param {T} [value]
+	 * @param {Options} [options]
+	 * @param {import('svelte/store').StartStopNotifier<T>} start
 	 */
+	constructor(value, options = {}, start = noop) {
+		options = {
+			storage: undefined,
+			key: undefined,
+			load: true,
+			...options
+		};
+		const { storage, key, load } = options;
+
+		if (typeof storage === 'string' && isBrowser) {
+			this.storage =
+				options.storage === 'localStorage'
+					? localStorage
+					: options.storage === 'sessionStorage'
+					? sessionStorage
+					: null;
+		} else if (isBrowser) {
+			this.storage = storage;
+		}
+		this.key = key;
+
+		if (this.storage) {
+			if (!this.key) {
+				throw new Error('key is required when storage is set');
+			}
+
+			if (this.storage.getItem(this.key)) {
+				if (load) {
+					// value in storage has precedence over value value
+					rawStoredValue = this.storage.getItem(this.key);
+					if (rawStoredValue) {
+						value = JSON.parse(rawStoredValue).value;
+					}
+				}
+			}
+			this.storage.setItem(options.key, JSON.stringify({ value }));
+		}
+
+		this.store = writable(value, start);
+		this.subscribe = this.store.subscribe;
+	}
+
+	/**
+	 * @protected
+	 * @type {import('svelte/store').Writable<T>} */
+	store;
 
 	/** @type {null | localStorage | sessionStorage} */
 	storage;
@@ -52,35 +101,6 @@ export default class Store {
 	update(updater) {
 		const value = updater(get(this.store));
 		this.set(value);
-	}
-
-	/**
-	 * @constructor
-	 * @param {T} [value]
-	 * @param {Options} [options]
-	 * @param {import('svelte/store').StartStopNotifier<any>} start
-	 */
-	constructor(value, options = { storage: 'null', key: '', load: false }, start = noop) {
-		this.storage = isBrowser
-			? options.storage === 'localStorage'
-				? localStorage
-				: options.storage === 'sessionStorage'
-				? sessionStorage
-				: null
-			: null;
-		this.key = options.key || '';
-
-		if (this.storage) {
-			if (this.storage.getItem(this.key)) {
-				if (options.load ?? true) { // default load = true
-					value = JSON.parse(this.storage.getItem(this.key) || '{}').value;
-				}
-			}
-			this.storage.setItem(options.key || '', JSON.stringify({ value }));
-		}
-
-		this.store = writable(value, start);
-		this.subscribe = this.store.subscribe;
 	}
 
 	/** @returns {T} */
