@@ -18,15 +18,27 @@ const isBrowser = typeof window !== 'undefined' && typeof window.document !== 'u
  * @implements {import('svelte/store').Writable<T>}
  */
 export default class Store {
-	storage = undefined;
-	key = undefined;
-	load = false;
+  /**
+   * @protected
+   * @type {import('svelte/store').Writable<T>} */
+  store;
+
+  /** @type {null | localStorage | sessionStorage} */
+  storage;
+
+  /** @type {Options["key"]} */
+  key;
+
+  /**
+   * @public
+   */
+  subscribe;
 
 	/**
 	 * @constructor
 	 * @param {T} [value]
 	 * @param {Options} [options]
-	 * @param {import('svelte/store').StartStopNotifier<T>} start
+	 * @param {import('svelte/store').StartStopNotifier<T>} [start]
 	 */
 	constructor(value, options = {}, start = noop) {
 		options = {
@@ -69,22 +81,6 @@ export default class Store {
 		this.store = writable(value, start);
 		this.subscribe = this.store.subscribe;
 	}
-
-	/**
-	 * @protected
-	 * @type {import('svelte/store').Writable<T>} */
-	store;
-
-	/** @type {null | localStorage | sessionStorage} */
-	storage;
-
-	/** @type {Options["key"]} */
-	key;
-
-	/**
-	 * @public
-	 */
-	subscribe;
 
 	/**
 	 * @public
