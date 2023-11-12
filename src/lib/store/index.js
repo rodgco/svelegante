@@ -14,8 +14,13 @@ const isBrowser = typeof window !== 'undefined' && typeof window.document !== 'u
  */
 
 /**
+ * @template X
+ * @typedef {import('svelte/store').Writable<X>} Writable
+ */
+
+/**
  * @template T
- * @implements {import('svelte/store').Writable<T>}
+ * @implements {Writable<T>}
  */
 export default class Store {
   /**
