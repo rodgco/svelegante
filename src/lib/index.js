@@ -2,4 +2,4 @@
 import Store from './store';
 
 export default Store;
-export * from './util';
+export { isBrowser, isNode, getLocalStorage, getSessionStorage } from './util';
