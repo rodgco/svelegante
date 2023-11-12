@@ -4,9 +4,9 @@ export const isBrowser = typeof window !== 'undefined' && typeof window.document
 /** @type {boolean} */
 export const isNode = typeof process !== 'undefined' && process.versions != null && process.versions.node != null;
 
-/** @type {Storage | null} */
+/** @type {localStorage | sessionStorage | null} */
 export const getLocalStorage = isBrowser ? window.localStorage : null;
 
-/** @type {Storage | null} */
+/** @type {localStorage | sessionStorage | null} */
 export const getSessionStorage = isBrowser ? window.sessionStorage : null;
 
